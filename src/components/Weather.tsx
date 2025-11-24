@@ -3,7 +3,12 @@ import {useGetWeatherByCityQuery} from "../features/api/weatherAction.ts";
 
 const Weather = () => {
     const city = useAppSelector(state => state.city);
-    const {data, error, isLoading} = useGetWeatherByCityQuery(city);
+    const {data, error, isLoading} = useGetWeatherByCityQuery(city, {
+        skip: !city,
+        refetchOnFocus: true,
+        pollingInterval: 600_000,
+        skipPollingIfUnfocused: true,
+    });
 
     if (!city) {
         return <div className={'infoWeath'}>Enter city name</div>;
